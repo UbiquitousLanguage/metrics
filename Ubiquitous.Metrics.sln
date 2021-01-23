@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Metrics", "src\Ubiquitous.Metrics\Ubiquitous.Metrics.csproj", "{40B5BCDD-A82B-41C5-B721-AF1E95E41FDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Metrics.Prometheus", "src\Ubiquitous.Metrics.Prometheus\Ubiquitous.Metrics.Prometheus.csproj", "{ADEF7CBE-D1CB-45BB-A105-B7E27A7A9B76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Metrics.Diagnostics", "src\Ubiquitous.Metrics.Diagnostics\Ubiquitous.Metrics.Diagnostics.csproj", "{EBB37C0B-729C-44B2-AA22-A76E6FE2B960}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{9D8B5837-914A-4683-A7AA-18E05EEAA8CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40B5BCDD-A82B-41C5-B721-AF1E95E41FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40B5BCDD-A82B-41C5-B721-AF1E95E41FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40B5BCDD-A82B-41C5-B721-AF1E95E41FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40B5BCDD-A82B-41C5-B721-AF1E95E41FDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADEF7CBE-D1CB-45BB-A105-B7E27A7A9B76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADEF7CBE-D1CB-45BB-A105-B7E27A7A9B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADEF7CBE-D1CB-45BB-A105-B7E27A7A9B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADEF7CBE-D1CB-45BB-A105-B7E27A7A9B76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBB37C0B-729C-44B2-AA22-A76E6FE2B960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBB37C0B-729C-44B2-AA22-A76E6FE2B960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBB37C0B-729C-44B2-AA22-A76E6FE2B960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBB37C0B-729C-44B2-AA22-A76E6FE2B960}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ADEF7CBE-D1CB-45BB-A105-B7E27A7A9B76} = {9D8B5837-914A-4683-A7AA-18E05EEAA8CD}
+	EndGlobalSection
+EndGlobal

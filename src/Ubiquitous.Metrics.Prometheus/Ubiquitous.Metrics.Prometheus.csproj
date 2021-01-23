@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="prometheus-net" Version="4.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ubiquitous.Metrics\Ubiquitous.Metrics.csproj" />
+  </ItemGroup>
+</Project>
