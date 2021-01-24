@@ -1,13 +1,12 @@
-using System.Linq;
 using JetBrains.Annotations;
 using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Prometheus {
     [PublicAPI]
     public class PrometheusConfigurator : IMetrics {
-        readonly DefaultLabel[] _defaultLabels;
+        readonly Label[] _defaultLabels;
 
-        public PrometheusConfigurator(params DefaultLabel[] defaultLabels) => _defaultLabels = defaultLabels;
+        public PrometheusConfigurator(params Label[] defaultLabels) => _defaultLabels = defaultLabels;
 
         public ICountMetric CreateCount(MetricDefinition metricDefinition)
             => new PrometheusCount(metricDefinition, _defaultLabels);

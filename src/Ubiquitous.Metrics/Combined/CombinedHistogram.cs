@@ -10,8 +10,8 @@ namespace Ubiquitous.Metrics.Combined {
 
         internal CombinedHistogram(ICollection<IHistogramMetric> inner) => _inner = inner;
 
-        public void Observe(Stopwatch stopwatch, Label[]? labels = null, int count = 1) => _inner.ForEach(x => x.Observe(stopwatch, labels, count));
+        public void Observe(Stopwatch stopwatch, LabelValue[]? labels = null, int count = 1) => _inner.ForEach(x => x.Observe(stopwatch, labels, count));
 
-        public void Observe(DateTimeOffset when, Label[]? labels = null) => _inner.ForEach(x => x.Observe(when, labels));
+        public void Observe(DateTimeOffset when, LabelValue[]? labels = null) => _inner.ForEach(x => x.Observe(when, labels.ValueOrEmpty()));
     }
 }

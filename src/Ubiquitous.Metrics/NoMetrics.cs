@@ -23,23 +23,23 @@ namespace Ubiquitous.Metrics {
 
             protected internal NoCount(MetricDefinition definition) : base(definition) { }
 
-            public void Inc(int count = 1, params Label[]? labels) => _count += count;
+            public void Inc(int count = 1, params LabelValue[]? labels) => _count += count;
         }
 
         class NoHistogram : NoMetric, IHistogramMetric {
             protected internal NoHistogram(MetricDefinition definition) : base(definition) { }
 
-            public void Observe(Stopwatch stopwatch, Label[]? labels = null, int count = 1) => Observe(stopwatch.ElapsedMilliseconds * 1000, labels);
+            public void Observe(Stopwatch stopwatch, LabelValue[]? labels = null, int count = 1) => Observe(stopwatch.ElapsedMilliseconds * 1000, labels);
 
-            public void Observe(DateTimeOffset when, params Label[] labels) => Observe((DateTimeOffset.Now - when).Seconds, labels);
+            public void Observe(DateTimeOffset when, params LabelValue[] labels) => Observe((DateTimeOffset.Now - when).Seconds, labels);
 
-            void Observe(double seconds, Label[]? labels) { }
+            void Observe(double seconds, LabelValue[]? labels) { }
         }
 
         class NoGauge : NoMetric, IGaugeMetric {
             protected internal NoGauge(MetricDefinition definition) : base(definition) { }
 
-            public void Set(double value, params Label[] labels) { }
+            public void Set(double value, params LabelValue[] labels) { }
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Ubiquitous.Metrics {
         public static Metrics Instance { get; }
 
         public static Metrics CreateUsing(params IMetrics[] configurators) {
-            var cfg = configurators.Length > 0 ? configurators : new []{new NoMetrics()};
+            var cfg = configurators.Length > 0 ? configurators : new[] {new NoMetrics()};
 
             var combine = cfg.Length > 1;
 
@@ -51,7 +51,7 @@ namespace Ubiquitous.Metrics {
             Func<Task>       action,
             IHistogramMetric metric,
             ICountMetric?    errorCount = null,
-            Label[]?         labels     = null,
+            LabelValue[]?    labels     = null,
             int              count      = 1
         ) {
             var stopwatch = Stopwatch.StartNew();
@@ -74,7 +74,7 @@ namespace Ubiquitous.Metrics {
             Action           action,
             IHistogramMetric metric,
             ICountMetric?    errorCount = null,
-            Label[]?         labels     = null,
+            LabelValue[]?    labels     = null,
             int              count      = 1
         ) {
             var stopwatch = Stopwatch.StartNew();
@@ -97,7 +97,7 @@ namespace Ubiquitous.Metrics {
             Func<Task<T>>    action,
             IHistogramMetric metric,
             ICountMetric?    errorCount = null,
-            Label[]?         labels     = null,
+            LabelValue[]?    labels     = null,
             int              count      = 1
         ) {
             var stopwatch = Stopwatch.StartNew();

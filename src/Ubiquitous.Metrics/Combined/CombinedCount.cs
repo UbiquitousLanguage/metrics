@@ -8,6 +8,6 @@ namespace Ubiquitous.Metrics.Combined {
 
         internal CombinedCount(ICollection<ICountMetric> inner) => _inner = inner;
 
-        public void Inc(int count = 1, params Label[]? labels) => _inner.ForEach(x => x.Inc(count, labels));
+        public void Inc(int count = 1, params LabelValue[]? labels) => _inner.ForEach(x => x.Inc(count, labels));
     }
 }

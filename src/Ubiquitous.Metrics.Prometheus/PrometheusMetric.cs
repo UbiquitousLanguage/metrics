@@ -5,13 +5,15 @@ using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Prometheus {
     abstract class PrometheusMetric {
-        protected string[] DefaultLabels { get; }
+        string[] DefaultLabelValues { get; }
 
-        protected PrometheusMetric(DefaultLabel[] defaultLabels) => DefaultLabels = defaultLabels.GetLabels();
-
-        public TChild CombineLabels<TChild>(Collector<TChild> collector, Label[]? labels)
-            where TChild : ChildBase {
-            return collector.Labels(DefaultLabels.SafeUnion(labels).ToArray());
+        protected PrometheusMetric(Label[]? defaultLabels) {
+            var labels = defaultLabels.ValueOrEmpty();
+            DefaultLabelValues = labels.GetLabels();
         }
+
+        protected TChild CombineLabels<TChild>(Collector<TChild> collector, LabelValue[]? labels)
+            where TChild : ChildBase
+            => collector.Labels(DefaultLabelValues.SafeUnion(labels.GetStrings()).ToArray());
     }
 }
