@@ -21,8 +21,8 @@ namespace Ubiquitous.Metrics {
         /// </summary>
         public static Metrics Instance { get; }
 
-        public static Metrics CreateUsing(params IMetrics[] configurators) {
-            var cfg = configurators.Length > 0 ? configurators : new[] {new NoMetrics()};
+        public static Metrics CreateUsing(params IMetricsProvider[] configurators) {
+            var cfg = configurators.Length > 0 ? configurators : new[] {new NoMetricsProvider()};
 
             var combine = cfg.Length > 1;
 

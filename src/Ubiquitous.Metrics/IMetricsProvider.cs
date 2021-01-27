@@ -1,5 +1,5 @@
 namespace Ubiquitous.Metrics {
-    public interface IMetrics {
+    public interface IMetricsProvider {
         ICountMetric CreateCount(MetricDefinition definition);
 
         IHistogramMetric CreateHistogram(MetricDefinition definition);

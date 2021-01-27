@@ -5,7 +5,7 @@ using System.Diagnostics;
 using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics {
-    public class NoMetrics : IMetrics {
+    public class NoMetricsProvider : IMetricsProvider {
         public ICountMetric CreateCount(MetricDefinition definition) => new NoCount(definition);
 
         public IHistogramMetric CreateHistogram(MetricDefinition definition) => new NoHistogram(definition);

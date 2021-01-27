@@ -5,7 +5,7 @@ using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Dogstatsd {
     [PublicAPI]
-    public class StatsdConfigurator : IMetrics {
+    public class StatsdConfigurator : IMetricsProvider {
         public StatsdConfigurator(Label[] defaultLabels, string? prefix = null, string? server = null)
             => DogStatsd.Configure(
                 new StatsdConfig {

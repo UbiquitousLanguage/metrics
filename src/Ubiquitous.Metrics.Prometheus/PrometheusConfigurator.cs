@@ -3,7 +3,7 @@ using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Prometheus {
     [PublicAPI]
-    public class PrometheusConfigurator : IMetrics {
+    public class PrometheusConfigurator : IMetricsProvider {
         readonly Label[] _defaultLabels;
 
         public PrometheusConfigurator(params Label[] defaultLabels) => _defaultLabels = defaultLabels;
