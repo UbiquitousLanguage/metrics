@@ -8,7 +8,7 @@ namespace Ubiquitous.Metrics {
         public string   Description   { get; }
         public string[] LabelNames    { get; }
 
-        public MetricDefinition(string name, string? description, LabelName[] labelNames) {
+        public MetricDefinition(string name, string? description, params LabelName[] labelNames) {
             Name = name;
             Ensure.NotEmpty(name, nameof(name));
 
