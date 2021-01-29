@@ -8,6 +8,6 @@ namespace Ubiquitous.Metrics.Combined {
 
         internal CombinedGauge(ICollection<IGaugeMetric> inner) => _inner = inner;
 
-        public void Set(double value, params LabelValue[]? labels) => _inner.ForEach(x => x.Set(value, labels));
+        public void Set(double value, params LabelValue[] labels) => _inner.ForEach(x => x.Set(value, labels));
     }
 }

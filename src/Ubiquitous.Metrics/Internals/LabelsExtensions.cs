@@ -11,8 +11,8 @@ namespace Ubiquitous.Metrics.Internals {
         public static string[]? GetStrings(this LabelValue[]? labelValues) 
             => labelValues?.Select(x => x.Value).ToArray();
         
-        public static string[] GetLabelNames(this Label[] labels) 
-            => labels.Select(x => x.Name.Name).ToArray();
+        public static string[]? GetLabelNames(this Label[]? labels) 
+            => labels?.Select(x => x.Name.Name).ToArray();
         
         public static string[] GetLabels(this Label[] labels) 
             => labels.Select(x => x.Value.Value).ToArray();

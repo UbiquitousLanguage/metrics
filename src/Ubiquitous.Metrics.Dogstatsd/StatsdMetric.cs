@@ -13,12 +13,12 @@ namespace Ubiquitous.Metrics.Dogstatsd {
             MetricName  = metricDefinition.Name;
         }
 
-        protected string[] FormTags(LabelValue[]? labels) => StatsTags.FormTags(_labelNames, labels?.GetStrings());
+        protected string[]? FormTags(LabelValue[]? labels) => StatsTags.FormTags(_labelNames, labels?.GetStrings());
     }
 
     static class StatsTags {
-        internal static string[] FormTags(string[] labelNames, string[]? labelValues) {
-            return labelNames.Select(FormTag).ToArray();
+        internal static string[]? FormTags(string[]? labelNames, string[]? labelValues) {
+            return labelNames?.Select(FormTag).ToArray();
 
             string FormTag(string tag, int position) {
                 var label = IsInvalidLabel(position)
