@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <NoWarn>$(NoWarn);CS1591;CS0618;</NoWarn>
     <IsPackable>true</IsPackable>

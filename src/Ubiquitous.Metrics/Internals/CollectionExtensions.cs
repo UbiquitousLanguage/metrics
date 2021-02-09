@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ubiquitous.Metrics.Internals {
-    internal static class CollectionExtensions {
+    public static class CollectionExtensions {
         [DebuggerStepThrough]
         public static void ForEach<T>(this IEnumerable<T> collection, Action<T> doIt) => Parallel.ForEach(collection, doIt);
 
