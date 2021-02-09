@@ -10,8 +10,10 @@ using Ubiquitous.Metrics.Labels;
 namespace Ubiquitous.Metrics {
     [PublicAPI]
     public class Metrics {
-        Func<MetricDefinition, ICountMetric>     _createCount     = null!;
-        Func<MetricDefinition, IGaugeMetric>     _createGauge     = null!;
+        Func<MetricDefinition, ICountMetric> _createCount = null!;
+
+        Func<MetricDefinition, IGaugeMetric> _createGauge = null!;
+
         Func<MetricDefinition, IHistogramMetric> _createHistogram = null!;
 
         static Metrics() => Instance = new Metrics();
@@ -115,6 +117,33 @@ namespace Ubiquitous.Metrics {
             finally {
                 stopwatch.Stop();
                 metric.Observe(stopwatch, labels, count);
+            }
+
+            return result;
+        }
+
+        public static async Task<T?> Measure<T>(
+            Func<Task<T>>    action,
+            IHistogramMetric metric,
+            Func<T, int>     getCount,
+            ICountMetric?    errorCount = null,
+            LabelValue[]?    labels     = null
+        ) where T : class {
+            var stopwatch = Stopwatch.StartNew();
+
+            T? result = null;
+
+            try {
+                result = await action();
+            }
+            catch (Exception) {
+                errorCount?.Inc(labels: labels.ValueOrEmpty());
+
+                throw;
+            }
+            finally {
+                stopwatch.Stop();
+                metric.Observe(stopwatch, labels, result != null ? getCount(result) : 0);
             }
 
             return result;
