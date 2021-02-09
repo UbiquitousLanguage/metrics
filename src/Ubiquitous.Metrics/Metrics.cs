@@ -107,7 +107,36 @@ namespace Ubiquitous.Metrics {
             T result;
 
             try {
-                result = await action();
+                var task = action();
+                result = task.IsCompleted ? task.Result : await action();
+            }
+            catch (Exception) {
+                errorCount?.Inc(labels: labels.ValueOrEmpty());
+
+                throw;
+            }
+            finally {
+                stopwatch.Stop();
+                metric.Observe(stopwatch, labels, count);
+            }
+
+            return result;
+        }
+
+        public static async Task<T> Measure<T>(
+            Func<ValueTask<T>> action,
+            IHistogramMetric   metric,
+            ICountMetric?      errorCount = null,
+            LabelValue[]?      labels     = null,
+            int                count      = 1
+        ) {
+            var stopwatch = Stopwatch.StartNew();
+
+            T result;
+
+            try {
+                var task = action();
+                result = task.IsCompleted ? task.Result : await action();
             }
             catch (Exception) {
                 errorCount?.Inc(labels: labels.ValueOrEmpty());
@@ -134,7 +163,8 @@ namespace Ubiquitous.Metrics {
             T? result = null;
 
             try {
-                result = await action();
+                var task = action();
+                result = task.IsCompleted ? task.Result : await action();
             }
             catch (Exception) {
                 errorCount?.Inc(labels: labels.ValueOrEmpty());
