@@ -17,5 +17,7 @@ namespace Ubiquitous.Metrics.Prometheus {
             );
 
         public void Inc(int count = 1, params LabelValue[] labels) => CombineLabels(_count, labels).Inc(count);
+
+        public long Count => (long) _count.Value;
     }
 }

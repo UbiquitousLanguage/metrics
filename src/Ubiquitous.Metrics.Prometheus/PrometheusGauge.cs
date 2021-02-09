@@ -17,5 +17,7 @@ namespace Ubiquitous.Metrics.Prometheus {
             );
 
         public void Set(double value, params LabelValue[]? labels) => CombineLabels(_gauge, labels).Set(value);
+
+        public double Value => _gauge.Value;
     }
 }

@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading;
 using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics {
@@ -19,27 +20,40 @@ namespace Ubiquitous.Metrics {
         }
 
         class NoCount : NoMetric, ICountMetric {
-            int _count;
+            long _count;
 
             protected internal NoCount(MetricDefinition definition) : base(definition) { }
 
-            public void Inc(int count = 1, params LabelValue[]? labels) => _count += count;
+            public void Inc(int count = 1, params LabelValue[]? labels) => Interlocked.Add(ref _count, count);
+            public long Count => _count;
         }
 
         class NoHistogram : NoMetric, IHistogramMetric {
             protected internal NoHistogram(MetricDefinition definition) : base(definition) { }
 
-            public void Observe(Stopwatch stopwatch, LabelValue[]? labels = null, int count = 1) => Observe(stopwatch.ElapsedMilliseconds * 1000, labels);
+            public double Sum { get; private set; }
 
-            public void Observe(DateTimeOffset when, params LabelValue[] labels) => Observe((DateTimeOffset.Now - when).Seconds, labels);
+            public long Count { get; private set; }
 
-            void Observe(double seconds, LabelValue[]? labels) { }
+            public void Observe(Stopwatch stopwatch, LabelValue[]? labels = null, int count = 1) => Observe(stopwatch.ElapsedMilliseconds * 1000, count);
+
+            public void Observe(DateTimeOffset when, params LabelValue[] labels) => Observe((DateTimeOffset.Now - when).Seconds, 1);
+
+            void Observe(double seconds, long count) {
+                Sum += seconds;
+                Count += count;
+            }
         }
 
         class NoGauge : NoMetric, IGaugeMetric {
+            double _value;
+            
             protected internal NoGauge(MetricDefinition definition) : base(definition) { }
 
-            public void Set(double value, params LabelValue[] labels) { }
+            public void Set(double value, params LabelValue[] labels)
+                => Interlocked.Exchange(ref _value, _value + value);
+
+            public double Value => _value;
         }
     }
 }

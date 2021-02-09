@@ -21,8 +21,12 @@ namespace Ubiquitous.Metrics.Prometheus {
                 }
             );
 
+        public double Sum => _histogram.Sum;
+
+        public long Count => _histogram.Count;
+
         public void Observe(Stopwatch stopwatch, LabelValue[]? labels = null, int count = 1)
-            => CombineLabels(_histogram, labels).Observe(stopwatch.ElapsedTicks / (double) Stopwatch.Frequency, count);
+            => CombineLabels(_histogram, labels).Observe(stopwatch.WatchSum(), count);
 
         public void Observe(DateTimeOffset when, params LabelValue[] labels)
             => CombineLabels(_histogram, labels).Observe((DateTimeOffset.UtcNow - when).TotalSeconds);
