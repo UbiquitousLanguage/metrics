@@ -1,18 +1,19 @@
-using System.Threading;
 using StatsdClient;
 using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Dogstatsd {
     class StatsdGauge : StatsdMetric, IGaugeMetric {
-        internal StatsdGauge(MetricDefinition metricDefinition) : base(metricDefinition) { }
+        readonly BaseGauge _base;
+
+        internal StatsdGauge(MetricDefinition metricDefinition) : base(metricDefinition) {
+            _base = new BaseGauge();
+        }
 
         public void Set(double value, params LabelValue[] labels) {
             DogStatsd.Gauge(MetricName, value, tags: FormTags(labels));
-            Interlocked.Exchange(ref _value, _value + value);
+            _base.Set(value);
         }
 
-        public double Value => _value;
-
-        double _value;
+        public double Value => _base.Value;
     }
 }
