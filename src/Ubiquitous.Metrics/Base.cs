@@ -1,5 +1,5 @@
-using System.Diagnostics;
 using System.Threading;
+using static System.BitConverter;
 
 namespace Ubiquitous.Metrics {
     public class BaseCount {
@@ -20,15 +20,24 @@ namespace Ubiquitous.Metrics {
 
     public class BaseHistogram {
         public void Observe(double seconds, int count = 1) {
-            var newSum = _sum + seconds;
-            Interlocked.Exchange(ref _sum, newSum);
+            Add(seconds * count);
             Interlocked.Add(ref _count, count);
         }
-        
-        public double Sum => _sum;
-        public long Count => _count;
 
-        double _sum;
-        long   _count;
+        public double Sum => Int64BitsToDouble(Interlocked.Read(ref _sum));
+        public long Count => Interlocked.Read(ref _count);
+
+        long _sum;
+        long _count;
+
+        void Add(double increment) {
+            long   comp;
+            double num;
+
+            do {
+                comp = _sum;
+                num = Int64BitsToDouble(comp) + increment;
+            } while (comp != Interlocked.CompareExchange(ref _sum, DoubleToInt64Bits(num), comp));
+        }
     }
 }
