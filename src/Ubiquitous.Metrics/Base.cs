@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Threading;
-using Ubiquitous.Metrics.Internals;
 
 namespace Ubiquitous.Metrics {
     public class BaseCount {
@@ -12,7 +11,7 @@ namespace Ubiquitous.Metrics {
     }
 
     public class BaseGauge {
-        public void Set(double value) => Interlocked.Exchange(ref _value, _value + value);
+        public void Set(double value) => Interlocked.Exchange(ref _value, value);
 
         public double Value => _value;
 
