@@ -1,6 +1,6 @@
 namespace Ubiquitous.Metrics.Labels {
     public record LabelValue {
-        internal string Value { get; }
+        public string Value { get; }
         
         public LabelValue(string value) => Value = value;
 

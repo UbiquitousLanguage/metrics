@@ -20,7 +20,7 @@ namespace Ubiquitous.Metrics {
 
     public class BaseHistogram {
         public void Observe(double seconds, int count = 1) {
-            Add(seconds * count);
+            Add(seconds);
             Interlocked.Add(ref _count, count);
         }
 

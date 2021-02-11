@@ -1,12 +1,11 @@
 using System;
 using System.Diagnostics;
-using System.Linq;
 using Prometheus;
 using Ubiquitous.Metrics.Internals;
 using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Prometheus {
-    class PrometheusHistogram : PrometheusMetric, IHistogramMetric {
+    class PrometheusHistogram : IHistogramMetric {
         readonly Histogram     _histogram;
         readonly BaseHistogram _base;
 
@@ -15,13 +14,14 @@ namespace Ubiquitous.Metrics.Prometheus {
 
         public PrometheusHistogram(
             MetricDefinition metricDefinition, Label[]? defaultLabels, double[]? bounds = null
-        ) : base(defaultLabels) {
+        ) {
             _histogram = global::Prometheus.Metrics.CreateHistogram(
                 metricDefinition.Name,
                 metricDefinition.Description,
                 new HistogramConfiguration {
                     Buckets = bounds ?? DefaultBounds,
-                    LabelNames = metricDefinition.LabelNames.SafeUnion(defaultLabels.GetLabelNames()).ToArray()
+                    StaticLabels = defaultLabels.ToDictionary(),
+                    LabelNames = metricDefinition.LabelNames
                 }
             );
             _base = new BaseHistogram();
@@ -33,19 +33,26 @@ namespace Ubiquitous.Metrics.Prometheus {
 
         public void Observe(Stopwatch stopwatch, LabelValue[]? labels = null, int count = 1) {
             var sec = stopwatch.Elapsed.TotalSeconds;
-            CombineLabels(_histogram, labels).Observe(sec, count);
+            Observe(sec, count, labels);
             _base.Observe(sec, count);
         }
 
         public void Observe(DateTimeOffset when, params LabelValue[] labels) {
             var sec = (DateTimeOffset.UtcNow - when).TotalSeconds;
-            CombineLabels(_histogram, labels).Observe(sec);
+            Observe(sec, 1, labels);
             _base.Observe(sec);
         }
 
         public void Observe(TimeSpan duration, LabelValue[]? labels = null, int count = 1) {
-            CombineLabels(_histogram, labels).Observe(duration.TotalSeconds, count);
+            Observe(duration.TotalSeconds, count, labels);
             _base.Observe(duration.TotalSeconds, count);
+        }
+
+        void Observe(double value, int count, LabelValue[]? labels) {
+            if (labels == null)
+                _histogram.Observe(value, count);
+            else
+                _histogram.WithLabels(labels.GetStrings()!).Observe(value, count);
         }
     }
 }
