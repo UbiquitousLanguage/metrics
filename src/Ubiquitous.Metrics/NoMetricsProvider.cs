@@ -35,9 +35,14 @@ namespace Ubiquitous.Metrics {
 
             public long Count { get; private set; }
 
-            public void Observe(Stopwatch stopwatch, LabelValue[]? labels = null, int count = 1) => Observe(stopwatch.ElapsedMilliseconds * 1000, count);
+            public void Observe(Stopwatch stopwatch, LabelValue[]? labels = null, int count = 1)
+                => Observe(stopwatch.ElapsedMilliseconds * 1000, count);
 
-            public void Observe(DateTimeOffset when, params LabelValue[] labels) => Observe((DateTimeOffset.Now - when).Seconds, 1);
+            public void Observe(DateTimeOffset when, params LabelValue[] labels)
+                => Observe((DateTimeOffset.Now - when).Seconds, 1);
+
+            public void Observe(TimeSpan duration, LabelValue[]? labels = null, int count = 1)
+                => Observe(duration.TotalSeconds, count);
 
             void Observe(double seconds, long count) {
                 Sum += seconds;
@@ -47,7 +52,7 @@ namespace Ubiquitous.Metrics {
 
         class NoGauge : NoMetric, IGaugeMetric {
             double _value;
-            
+
             protected internal NoGauge(MetricDefinition definition) : base(definition) { }
 
             public void Set(double value, params LabelValue[] labels)

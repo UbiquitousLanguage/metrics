@@ -42,5 +42,10 @@ namespace Ubiquitous.Metrics.Prometheus {
             CombineLabels(_histogram, labels).Observe(sec);
             _base.Observe(sec);
         }
+
+        public void Observe(TimeSpan duration, LabelValue[]? labels = null, int count = 1) {
+            CombineLabels(_histogram, labels).Observe(duration.TotalSeconds, count);
+            _base.Observe(duration.TotalSeconds, count);
+        }
     }
 }

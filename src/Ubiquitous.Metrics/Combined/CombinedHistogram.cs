@@ -20,5 +20,8 @@ namespace Ubiquitous.Metrics.Combined {
 
         public void Observe(DateTimeOffset when, LabelValue[]? labels = null)
             => _inner.ForEach(x => x.Observe(when, labels.ValueOrEmpty()));
+
+        public void Observe(TimeSpan duration, LabelValue[]? labels = null, int count = 1)
+            => _inner.ForEach(x => x.Observe(duration, labels, count));
     }
 }

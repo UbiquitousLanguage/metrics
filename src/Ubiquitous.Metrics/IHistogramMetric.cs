@@ -11,5 +11,7 @@ namespace Ubiquitous.Metrics {
         void Observe(Stopwatch stopwatch, LabelValue[]? labels = null, int count = 1);
 
         void Observe(DateTimeOffset when, params LabelValue[] labels);
+        
+        void Observe(TimeSpan duration, LabelValue[]? labels = null, int count = 1);
     }
 }

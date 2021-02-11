@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Threading;
 using StatsdClient;
 using Ubiquitous.Metrics.Labels;
 using Stopwatch = System.Diagnostics.Stopwatch;
@@ -19,13 +18,19 @@ namespace Ubiquitous.Metrics.Dogstatsd {
         public void Observe(Stopwatch stopwatch, LabelValue[]? labels, int count = 1) {
             foreach (var _ in Enumerable.Range(0, count))
                 DogStatsd.Histogram(MetricName, stopwatch.Elapsed.TotalSeconds, tags: FormTags(labels));
-            _base.Observe(stopwatch.Elapsed.TotalSeconds);
+            _base.Observe(stopwatch.Elapsed.TotalSeconds, count);
         }
 
         public void Observe(DateTimeOffset when, params LabelValue[] labels) {
             var sec = (DateTimeOffset.UtcNow - when).TotalSeconds;
             DogStatsd.Histogram(MetricName, sec, tags: FormTags(labels));
             _base.Observe(sec);
+        }
+
+        public void Observe(TimeSpan duration, LabelValue[]? labels = null, int count = 1) {
+            foreach (var _ in Enumerable.Range(0, count))
+                DogStatsd.Histogram(MetricName, duration.TotalSeconds, tags: FormTags(labels));
+            _base.Observe(duration.TotalSeconds, count);
         }
     }
 }
