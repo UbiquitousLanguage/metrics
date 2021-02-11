@@ -37,10 +37,8 @@ namespace Ubiquitous.Metrics.Dogstatsd {
                 return;
             }
 
-            var singleValue = value / count;
-
             foreach (var _ in Enumerable.Range(0, count))
-                DogStatsd.Histogram(MetricName, singleValue, tags: FormTags(labels));
+                DogStatsd.Histogram(MetricName, value, tags: FormTags(labels));
         }
     }
 }

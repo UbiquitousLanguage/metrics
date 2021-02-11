@@ -52,9 +52,9 @@ namespace Ubiquitous.Metrics.Prometheus {
             if (count == 0) return;
             
             if (labels == null)
-                _histogram.Observe(value / count, count);
+                _histogram.Observe(value, count);
             else
-                _histogram.WithLabels(labels.GetStrings()!).Observe(value / count, count);
+                _histogram.WithLabels(labels.GetStrings()!).Observe(value, count);
         }
     }
 }
