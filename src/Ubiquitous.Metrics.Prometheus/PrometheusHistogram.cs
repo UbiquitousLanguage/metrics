@@ -49,6 +49,8 @@ namespace Ubiquitous.Metrics.Prometheus {
         }
 
         void Observe(double value, int count, LabelValue[]? labels) {
+            if (count == 0) return;
+            
             if (labels == null)
                 _histogram.Observe(value / count, count);
             else
