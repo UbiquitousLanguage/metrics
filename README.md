@@ -2,6 +2,14 @@
 
 Abstractions for metrics with implementation for APM providers.
 
+## NuGet packages
+
+| Package | What for |
+| :------ | :------- |
+| [`Ubiquitous.Metrics`](https://www.nuget.org/packages/Ubiquitous.Metrics/) | Core library |
+| [`Ubiquitous.Metrics.Prometheus`](https://www.nuget.org/packages/Ubiquitous.Metrics.Prometheus/) | Prometheus support |
+| [`Ubiquitous.Metrics.Dogstatsd`](https://www.nuget.org/packages/Ubiquitous.Metrics.Dogstatsd/) | Datadog StatsD support |
+
 ## Why?
 
 Metrics in OpenTelemetry for .NET is still out sight, and we have a need to expose metrics to different vendors.
@@ -98,6 +106,8 @@ The metric histogram will get the observation, where the time is measured in sec
 
 ### Benefits
 
+### Tests
+
 In your application, you'd need to configure the metrics instance with a proper provider, so you get your application properly measured.
 
 However, you might want to avoid this in your test project. There, you can use the `NoMetrics` configuration provider. When instantiating the `Metrics` instance without any provider supplied, the `NoMetrics` provider will be used.
@@ -111,6 +121,8 @@ public class MyTestFixture {
     // here are my other setups
 }
 ```
+
+### Environment-specific
 
 Another scenario would be that your organisation is using Datadog APM to measure apps in production, but when running locally, you'd still like to measure and you don't have the Datadog agent running on your dev machine.
 
@@ -130,6 +142,12 @@ public static class Measurements {
     }
 }
 ```
+
+### Libraries
+
+It's probably not the best idea for a library author to couple measurements to a specific product.
+
+Using this library, you can be vendor-agnostic when collecting the metrics and give your users the ability to use the provider they want.
 
 ## Vendors support
 
