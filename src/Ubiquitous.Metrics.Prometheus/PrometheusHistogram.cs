@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using Prometheus;
-using Ubiquitous.Metrics.Internals;
 using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Prometheus {
@@ -31,30 +30,30 @@ namespace Ubiquitous.Metrics.Prometheus {
 
         public long Count => _base.Count;
 
-        public void Observe(Stopwatch stopwatch, LabelValue[]? labels = null, int count = 1) {
+        public void Observe(Stopwatch stopwatch, string[]? labels = null, int count = 1) {
             var sec = stopwatch.Elapsed.TotalSeconds;
             Observe(sec, count, labels);
             _base.Observe(sec, count);
         }
 
-        public void Observe(DateTimeOffset when, params LabelValue[] labels) {
+        public void Observe(DateTimeOffset when, string[]? labels = null, int count = 1) {
             var sec = (DateTimeOffset.UtcNow - when).TotalSeconds;
             Observe(sec, 1, labels);
             _base.Observe(sec);
         }
 
-        public void Observe(TimeSpan duration, LabelValue[]? labels = null, int count = 1) {
+        public void Observe(TimeSpan duration, string[]? labels = null, int count = 1) {
             Observe(duration.TotalSeconds, count, labels);
             _base.Observe(duration.TotalSeconds, count);
         }
 
-        void Observe(double value, int count, LabelValue[]? labels) {
+        void Observe(double value, int count, string[]? labels) {
             if (count == 0) return;
             
             if (labels == null)
                 _histogram.Observe(value, count);
             else
-                _histogram.WithLabels(labels.GetStrings()!).Observe(value, count);
+                _histogram.WithLabels(labels).Observe(value, count);
         }
     }
 }

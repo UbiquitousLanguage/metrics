@@ -1,13 +1,10 @@
 using StatsdClient;
-using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Dogstatsd {
     class StatsdCount : StatsdMetric, ICountMetric {
-        internal StatsdCount(MetricDefinition metricDefinition) : base(metricDefinition) {
-            _base = new BaseCount();
-        }
+        internal StatsdCount(MetricDefinition metricDefinition) : base(metricDefinition) => _base = new BaseCount();
 
-        public void Inc(int count = 1, params LabelValue[] labels) {
+        public void Inc(int count = 1, params string[] labels) {
             DogStatsd.Increment(MetricName, count, tags: FormTags(labels));
             _base.Inc(count);
         }

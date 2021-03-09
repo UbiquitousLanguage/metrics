@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Ubiquitous.Metrics.Combined;
 using Ubiquitous.Metrics.Internals;
-using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics {
     /// <summary>
@@ -71,7 +70,7 @@ namespace Ubiquitous.Metrics {
         /// </summary>
         /// <param name="definition">Metric definition (name, description and labels)</param>
         /// <returns></returns>
-        public IGaugeMetric CreateGauge(MetricDefinition definition) 
+        public IGaugeMetric CreateGauge(MetricDefinition definition)
             => Ensure.NotDefault(_createGauge, "Metrics provider hasn't been configured")(definition);
 
         /// <summary>
@@ -87,7 +86,7 @@ namespace Ubiquitous.Metrics {
             Func<Task>       action,
             IHistogramMetric metric,
             ICountMetric?    errorCount = null,
-            LabelValue[]?    labels     = null,
+            string[]?        labels     = null,
             int              count      = 1
         ) {
             var stopwatch = Stopwatch.StartNew();
@@ -119,7 +118,7 @@ namespace Ubiquitous.Metrics {
             Action           action,
             IHistogramMetric metric,
             ICountMetric?    errorCount = null,
-            LabelValue[]?    labels     = null,
+            string[]?        labels     = null,
             int              count      = 1
         ) {
             var stopwatch = Stopwatch.StartNew();
@@ -152,7 +151,7 @@ namespace Ubiquitous.Metrics {
             Func<Task<T>>    action,
             IHistogramMetric metric,
             ICountMetric?    errorCount = null,
-            LabelValue[]?    labels     = null,
+            string[]?        labels     = null,
             int              count      = 1
         ) {
             var stopwatch = Stopwatch.StartNew();
@@ -190,7 +189,7 @@ namespace Ubiquitous.Metrics {
             Func<ValueTask<T>> action,
             IHistogramMetric   metric,
             ICountMetric?      errorCount = null,
-            LabelValue[]?      labels     = null,
+            string[]?          labels     = null,
             int                count      = 1
         ) {
             var stopwatch = Stopwatch.StartNew();
@@ -229,7 +228,7 @@ namespace Ubiquitous.Metrics {
             IHistogramMetric metric,
             Func<T, int>     getCount,
             ICountMetric?    errorCount = null,
-            LabelValue[]?    labels     = null
+            string[]?        labels     = null
         ) where T : class {
             var stopwatch = Stopwatch.StartNew();
 

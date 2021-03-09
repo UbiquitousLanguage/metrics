@@ -1,5 +1,4 @@
 using Prometheus;
-using Ubiquitous.Metrics.Internals;
 using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Prometheus {
@@ -19,9 +18,9 @@ namespace Ubiquitous.Metrics.Prometheus {
             _base = new BaseGauge();
         }
 
-        public void Set(double value, params LabelValue[]? labels) {
+        public void Set(double value, params string[]? labels) {
             if (labels != null)
-                _gauge.WithLabels(labels.GetStrings()!).Set(value);
+                _gauge.WithLabels(labels).Set(value);
             else
                 _gauge.Set(value);
             _base.Set(value);

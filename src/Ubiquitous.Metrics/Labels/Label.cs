@@ -1,3 +1,3 @@
 namespace Ubiquitous.Metrics.Labels {
-    public record Label(LabelName Name, LabelValue Value);
+    public record Label(LabelName Name, string Value);
 }
