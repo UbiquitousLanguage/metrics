@@ -13,11 +13,9 @@ namespace Ubiquitous.Metrics {
     /// </summary>
     [PublicAPI]
     public class Metrics {
-        Func<MetricDefinition, ICountMetric> _createCount = null!;
-
-        Func<MetricDefinition, IGaugeMetric> _createGauge = null!;
-
-        Func<MetricDefinition, IHistogramMetric> _createHistogram = null!;
+        Func<MetricDefinition, ICountMetric>?     _createCount;
+        Func<MetricDefinition, IGaugeMetric>?     _createGauge;
+        Func<MetricDefinition, IHistogramMetric>? _createHistogram;
 
         static Metrics() => Instance = new Metrics();
 
@@ -57,21 +55,24 @@ namespace Ubiquitous.Metrics {
         /// </summary>
         /// <param name="definition">Metric definition (name, description and labels)</param>
         /// <returns></returns>
-        public ICountMetric CreateCount(MetricDefinition definition) => _createCount(definition);
+        public ICountMetric CreateCount(MetricDefinition definition)
+            => Ensure.NotDefault(_createCount, "Metrics provider hasn't been configured")(definition);
 
         /// <summary>
         /// Create a histogram metric
         /// </summary>
         /// <param name="definition">Metric definition (name, description and labels)</param>
         /// <returns></returns>
-        public IHistogramMetric CreateHistogram(MetricDefinition definition) => _createHistogram(definition);
+        public IHistogramMetric CreateHistogram(MetricDefinition definition)
+            => Ensure.NotDefault(_createHistogram, "Metrics provider hasn't been configured")(definition);
 
         /// <summary>
         /// Create a gauge metric
         /// </summary>
         /// <param name="definition">Metric definition (name, description and labels)</param>
         /// <returns></returns>
-        public IGaugeMetric CreateGauge(MetricDefinition definition) => _createGauge(definition);
+        public IGaugeMetric CreateGauge(MetricDefinition definition) 
+            => Ensure.NotDefault(_createGauge, "Metrics provider hasn't been configured")(definition);
 
         /// <summary>
         /// Helpful function to measure the execution time of a given asynchronous function

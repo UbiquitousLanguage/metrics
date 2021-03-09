@@ -96,6 +96,41 @@ app.Use((context, next) => Metrics.Measure(next,
 In this simple HTTP middleware, we use the `Measure` function, which calls the specified action, wrapped in the time measurement.
 The metric histogram will get the observation, where the time is measured in seconds.
 
+### Benefits
+
+In your application, you'd need to configure the metrics instance with a proper provider, so you get your application properly measured.
+
+However, you might want to avoid this in your test project. There, you can use the `NoMetrics` configuration provider. When instantiating the `Metrics` instance without any provider supplied, the `NoMetrics` provider will be used.
+
+The `Metrics.Instance` static member will implicitly create an instance of the `Metrics` class with `NoMetrics` provider.
+
+```csharp
+public class MyTestFixture {
+    static MyTextFixture() => MyAwesomeAppMetrics.Configure(Metrics.Instance);
+    
+    // here are my other setups
+}
+```
+
+Another scenario would be that your organisation is using Datadog APM to measure apps in production, but when running locally, you'd still like to measure and you don't have the Datadog agent running on your dev machine.
+
+In this case, you can run Prometheus and Grafana locally in Docker and use different configuration providers, based on the environment name.
+
+```csharp
+public static class Measurements {
+    public static void ConfigureMetrics(string environment) {
+        IMetricsProvider configProvider = environment == "Development"
+            ? new PrometheusConfigurator()
+            : new StatsdConfigurator(new [] {
+                  new Label("app", "myAwesomeApp"),
+                  new Label("environment", environment)
+              });
+        );
+        MyAwesomeAppMetrics.Configure(Metrics.CreateUsing(configProvider));
+    }
+}
+```
+
 ## Vendors support
 
 Currently, the library supports exposing metrics for:
