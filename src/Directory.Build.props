@@ -15,7 +15,8 @@
     <Company>Ubiquitous AS</Company>
     <Copyright>Copyright © $([System.DateTime]::Now.Year) Ubiquitous AS</Copyright>
     <PackageProjectUrl>https://github.com/ubiquitousas/metrics</PackageProjectUrl>
-<!--    <PackageIcon>icon.svg</PackageIcon>-->
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>metrics;prometheus;statsd</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/ubiquitousas/metrics</RepositoryUrl>
@@ -24,7 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-<!--    <None Include="../../icon.svg" Pack="true" Visible="false" PackagePath=""/>-->
+    <None Include="../../logo.png" Pack="true" Visible="false" PackagePath=""/>
   </ItemGroup>
   
   <ItemGroup>
