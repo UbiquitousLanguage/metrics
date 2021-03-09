@@ -8,6 +8,9 @@ using Ubiquitous.Metrics.Internals;
 using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics {
+    /// <summary>
+    /// The entry point for all the metrics
+    /// </summary>
     [PublicAPI]
     public class Metrics {
         Func<MetricDefinition, ICountMetric> _createCount = null!;
@@ -23,6 +26,12 @@ namespace Ubiquitous.Metrics {
         /// </summary>
         public static Metrics Instance { get; }
 
+        /// <summary>
+        /// Configure the Metrics instance using one or more providers
+        /// </summary>
+        /// <param name="configurators">Zero or more metric providers. If you don't supply any provider,
+        /// the NoOp provider will be used.</param>
+        /// <returns></returns>
         public static Metrics CreateUsing(params IMetricsProvider[] configurators) {
             var cfg = configurators.Length > 0 ? configurators : new[] {new NoMetricsProvider()};
 
@@ -43,12 +52,36 @@ namespace Ubiquitous.Metrics {
             return Instance;
         }
 
+        /// <summary>
+        /// Create a counter metric
+        /// </summary>
+        /// <param name="definition">Metric definition (name, description and labels)</param>
+        /// <returns></returns>
         public ICountMetric CreateCount(MetricDefinition definition) => _createCount(definition);
 
+        /// <summary>
+        /// Create a histogram metric
+        /// </summary>
+        /// <param name="definition">Metric definition (name, description and labels)</param>
+        /// <returns></returns>
         public IHistogramMetric CreateHistogram(MetricDefinition definition) => _createHistogram(definition);
 
+        /// <summary>
+        /// Create a gauge metric
+        /// </summary>
+        /// <param name="definition">Metric definition (name, description and labels)</param>
+        /// <returns></returns>
         public IGaugeMetric CreateGauge(MetricDefinition definition) => _createGauge(definition);
 
+        /// <summary>
+        /// Helpful function to measure the execution time of a given asynchronous function
+        /// </summary>
+        /// <param name="action">Actual operation to measure</param>
+        /// <param name="metric">Histogram metrics, which will observe the measurement</param>
+        /// <param name="errorCount">Optional: counter metric to count errors</param>
+        /// <param name="labels">Labels for the histogram and errors counter metrics</param>
+        /// <param name="count">Optional: count, one by default</param>
+        /// <returns></returns>
         public static async Task Measure(
             Func<Task>       action,
             IHistogramMetric metric,
@@ -72,6 +105,15 @@ namespace Ubiquitous.Metrics {
             }
         }
 
+        /// <summary>
+        /// Helpful function to measure the execution time of a given synchronous function
+        /// </summary>
+        /// <param name="action">Actual operation to measure</param>
+        /// <param name="metric">Histogram metrics, which will observe the measurement</param>
+        /// <param name="errorCount">Optional: counter metric to count errors</param>
+        /// <param name="labels">Labels for the histogram and errors counter metrics</param>
+        /// <param name="count">Optional: count, one by default</param>
+        /// <returns></returns>
         public static void Measure(
             Action           action,
             IHistogramMetric metric,
@@ -95,6 +137,16 @@ namespace Ubiquitous.Metrics {
             }
         }
 
+        /// <summary>
+        /// Helpful function to measure the execution time of a given asynchronous function,
+        /// and returns the observed function result.
+        /// </summary>
+        /// <param name="action">Actual operation to measure</param>
+        /// <param name="metric">Histogram metrics, which will observe the measurement</param>
+        /// <param name="errorCount">Optional: counter metric to count errors</param>
+        /// <param name="labels">Labels for the histogram and errors counter metrics</param>
+        /// <param name="count">Optional: count, one by default</param>
+        /// <returns></returns>
         public static async Task<T> Measure<T>(
             Func<Task<T>>    action,
             IHistogramMetric metric,
@@ -123,6 +175,16 @@ namespace Ubiquitous.Metrics {
             return result;
         }
 
+        /// <summary>
+        /// Helpful function to measure the execution time of a given asynchronous function,
+        /// and returns the observed function result.
+        /// </summary>
+        /// <param name="action">Actual operation to measure</param>
+        /// <param name="metric">Histogram metrics, which will observe the measurement</param>
+        /// <param name="errorCount">Optional: counter metric to count errors</param>
+        /// <param name="labels">Labels for the histogram and errors counter metrics</param>
+        /// <param name="count">Optional: count, one by default</param>
+        /// <returns></returns>
         public static async Task<T> Measure<T>(
             Func<ValueTask<T>> action,
             IHistogramMetric   metric,
@@ -151,6 +213,16 @@ namespace Ubiquitous.Metrics {
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="action">Actual operation to measure</param>
+        /// <param name="metric">Histogram metrics, which will observe the measurement</param>
+        /// <param name="getCount">A function, which is able to get the custom count from the function return</param>
+        /// <param name="errorCount">Optional: counter metric to count errors</param>
+        /// <param name="labels">Labels for the histogram and errors counter metrics</param>
+        /// <typeparam name="T">The observed function result</typeparam>
+        /// <returns></returns>
         public static async Task<T?> Measure<T>(
             Func<Task<T>>    action,
             IHistogramMetric metric,

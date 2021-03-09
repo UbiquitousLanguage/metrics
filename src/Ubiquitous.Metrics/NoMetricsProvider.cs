@@ -6,6 +6,10 @@ using System.Threading;
 using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics {
+    /// <summary>
+    /// No-op metrics provider, allows you to introduce metrics without a need
+    /// to configure the real provider yet.
+    /// </summary>
     public class NoMetricsProvider : IMetricsProvider {
         public ICountMetric CreateCount(MetricDefinition definition) => new NoCount(definition);
 
