@@ -1,15 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
 using Ubiquitous.Metrics.Internals;
 
 namespace Ubiquitous.Metrics.Combined {
     public class CombinedGauge : IGaugeMetric {
-        readonly ICollection<IGaugeMetric> _inner;
+        readonly IGaugeMetric[] _inner;
 
-        internal CombinedGauge(ICollection<IGaugeMetric> inner) => _inner = inner;
+        internal CombinedGauge(IGaugeMetric[] inner) => _inner = inner;
 
-        public void Set(double value, params string[] labels) => _inner.ForEach(x => x.Set(value, labels));
-        
-        public double Value => _inner.First().Value;
+        public void Set(double value, string? label = null) => _inner.ForEach(x => x.Set(value, label));
+
+        public void Set(double value, string[]? labels = null) => _inner.ForEach(x => x.Set(value, labels));
     }
 }

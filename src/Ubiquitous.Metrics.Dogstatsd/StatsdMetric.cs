@@ -1,6 +1,4 @@
 using System.Linq;
-using Ubiquitous.Metrics.Internals;
-using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Dogstatsd {
     abstract class StatsdMetric {

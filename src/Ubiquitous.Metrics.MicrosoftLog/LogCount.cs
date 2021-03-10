@@ -1,12 +1,15 @@
 using Microsoft.Extensions.Logging;
+using Ubiquitous.Metrics.InMemory;
 
 namespace Ubiquitous.Metrics.MicrosoftLog {
     class LogCount : LoggingMetric, ICountMetric {
-        internal LogCount(MetricDefinition metricDefinition, ILogger log) : base(metricDefinition, log) { }
+        readonly InMemoryCount _counter;
 
-        public void Inc(int count = 1, params string[] labels) {
-            Count += count;
+        internal LogCount(MetricDefinition metricDefinition, ILogger log) : base(metricDefinition, log)
+            => _counter = new InMemoryCount(metricDefinition);
 
+        public void Inc(string[]? labels, int count = 1) {
+            _counter.Inc(labels, count);
             Log.LogInformation(
                 "Counter {Name}: value {Value}, labels {Labels}",
                 Definition.Name,
@@ -15,6 +18,6 @@ namespace Ubiquitous.Metrics.MicrosoftLog {
             );
         }
 
-        public long Count { get; private set; }
+        public long Count => _counter.Count;
     }
 }

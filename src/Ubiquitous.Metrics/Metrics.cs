@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Ubiquitous.Metrics.Combined;
 using Ubiquitous.Metrics.Internals;
+using Ubiquitous.Metrics.NoMetrics;
 
 namespace Ubiquitous.Metrics {
     /// <summary>
@@ -35,15 +36,15 @@ namespace Ubiquitous.Metrics {
             var combine = cfg.Length > 1;
 
             Instance._createCount = combine
-                ? def => new CombinedCount(cfg.Select(x => x.CreateCount(def)).ToList())
+                ? def => new CombinedCount(cfg.Select(x => x.CreateCount(def)).ToArray())
                 : def => cfg[0].CreateCount(def);
 
             Instance._createGauge = combine
-                ? def => new CombinedGauge(cfg.Select(x => x.CreateGauge(def)).ToList())
+                ? def => new CombinedGauge(cfg.Select(x => x.CreateGauge(def)).ToArray())
                 : def => cfg[0].CreateGauge(def);
 
             Instance._createHistogram = combine
-                ? def => new CombinedHistogram(cfg.Select(x => x.CreateHistogram(def)).ToList())
+                ? def => new CombinedHistogram(cfg.Select(x => x.CreateHistogram(def)).ToArray())
                 : def => cfg[0].CreateHistogram(def);
 
             return Instance;
@@ -95,7 +96,7 @@ namespace Ubiquitous.Metrics {
                 await action();
             }
             catch (Exception) {
-                errorCount?.Inc(labels: labels.ValueOrEmpty());
+                errorCount?.Inc(labels);
 
                 throw;
             }
@@ -127,7 +128,7 @@ namespace Ubiquitous.Metrics {
                 action();
             }
             catch (Exception) {
-                errorCount?.Inc(labels: labels.ValueOrEmpty());
+                errorCount?.Inc(labels);
 
                 throw;
             }
@@ -163,7 +164,7 @@ namespace Ubiquitous.Metrics {
                 result = task.IsCompleted ? task.Result : await action();
             }
             catch (Exception) {
-                errorCount?.Inc(labels: labels.ValueOrEmpty());
+                errorCount?.Inc(labels);
 
                 throw;
             }
@@ -201,7 +202,7 @@ namespace Ubiquitous.Metrics {
                 result = task.IsCompleted ? task.Result : await action();
             }
             catch (Exception) {
-                errorCount?.Inc(labels: labels.ValueOrEmpty());
+                errorCount?.Inc(labels: labels);
 
                 throw;
             }
@@ -214,7 +215,8 @@ namespace Ubiquitous.Metrics {
         }
 
         /// <summary>
-        /// 
+        /// Helpful function to measure the execution time of a given asynchronous function,
+        /// and returns the observed function result.
         /// </summary>
         /// <param name="action">Actual operation to measure</param>
         /// <param name="metric">Histogram metrics, which will observe the measurement</param>
@@ -239,7 +241,7 @@ namespace Ubiquitous.Metrics {
                 result = task.IsCompleted ? task.Result : await action();
             }
             catch (Exception) {
-                errorCount?.Inc(labels: labels.ValueOrEmpty());
+                errorCount?.Inc(labels);
 
                 throw;
             }

@@ -4,7 +4,7 @@ using Ubiquitous.Metrics.Labels;
 // ReSharper disable ReturnTypeCanBeEnumerable.Global
 
 namespace Ubiquitous.Metrics.Internals {
-    public static class LabelsExtensions {
+    static class LabelsExtensions {
         public static string[]? GetStrings(this LabelName[]? labelNames) 
             => labelNames?.Select(x => x.Name).ToArray();
         

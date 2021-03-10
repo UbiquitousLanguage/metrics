@@ -1,17 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
 using Ubiquitous.Metrics.Internals;
 
 namespace Ubiquitous.Metrics.Combined {
     public class CombinedCount : ICountMetric {
-        readonly ICollection<ICountMetric> _inner;
+        readonly ICountMetric[] _inner;
 
-        internal CombinedCount(ICollection<ICountMetric> inner) => _inner = inner;
+        internal CombinedCount(ICountMetric[] inner) => _inner = inner;
 
-        public void Inc(int count = 1, params string[] labels) {
-            _inner.ForEach(x => x.Inc(count, labels));
-        }
+        public void Inc(string? label = null, int count = 1) => _inner.ForEach(x => x.Inc(label, count));
 
-        public long Count => _inner.First().Count;
+        public void Inc(string[]? labels, int count = 1) => _inner.ForEach(x => x.Inc(labels, count));
     }
 }
