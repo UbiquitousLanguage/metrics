@@ -1,3 +1,5 @@
+using Ubiquitous.Metrics.Internals;
+
 namespace Ubiquitous.Metrics {
     /// <summary>
     /// Gauge metric, which can go up and down
@@ -7,12 +9,15 @@ namespace Ubiquitous.Metrics {
         /// Set the gauge to a new value
         /// </summary>
         /// <param name="value">The new gauge value</param>
-        /// <param name="labels">Optional: metric labels, must be matching the number of configured label names</param>
-        void Set(double value, params string[] labels);
+        /// <param name="label">Metric label, must have one label name configured for the metric</param>
+        public void Set(double value, string? label = null)
+            => Set(value, label.ArrayOrNull());
         
         /// <summary>
-        /// The current gauge value
+        /// Set the gauge to a new value
         /// </summary>
-        double Value { get; }
+        /// <param name="value">The new gauge value</param>
+        /// <param name="labels">Metric labels, must be matching the number of configured label names</param>
+        void Set(double value, string[]? labels = null);
     }
 }

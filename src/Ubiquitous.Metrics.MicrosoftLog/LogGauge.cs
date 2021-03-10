@@ -1,12 +1,15 @@
 using Microsoft.Extensions.Logging;
+using Ubiquitous.Metrics.InMemory;
 
 namespace Ubiquitous.Metrics.MicrosoftLog {
     class LogGauge : LoggingMetric, IGaugeMetric {
-        internal LogGauge(MetricDefinition metricDefinition, ILogger log) : base(metricDefinition, log) { }
+        readonly InMemoryGauge _gauge;
 
-        public void Set(double value, params string[] labels) {
-            Value = value;
+        internal LogGauge(MetricDefinition metricDefinition, ILogger log) : base(metricDefinition, log)
+            => _gauge = new InMemoryGauge(metricDefinition);
 
+        public void Set(double value, string[]? labels) {
+            _gauge.Set(value, labels);
             Log.LogInformation(
                 "Gauge {Name}: value {Value}, labels {Labels}",
                 Definition.Name,
@@ -15,6 +18,6 @@ namespace Ubiquitous.Metrics.MicrosoftLog {
             );
         }
 
-        public double Value { get; private set; }
+        public double Value => _gauge.Value;
     }
 }

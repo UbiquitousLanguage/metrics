@@ -94,7 +94,7 @@ Then, when you observe the execution time, you need to supply the label value:
 app.Use((context, next) => Metrics.Measure(next, 
     MyAwesomeMetrics.HttpApiResponse, 
     MyAwesomeMetrics.HttpApiErrors, 
-    new LabelValue[] {
+    new [] {
         context.Request.Path.Value,
         context.Request.Method
     })
@@ -155,6 +155,12 @@ Currently, the library supports exposing metrics for:
 
 - Prometheus (using [prometheus-net](https://github.com/prometheus-net/prometheus-net))
 - Datadog Statsd (using [Dogstatsd](https://github.com/DataDog/dogstatsd-csharp-client))
+
+In addition, we provide a few "fake" configurators, which either do nothing, or allow you to look at the measurements locally.
+
+- NoMetrics: very fast, good for libraries as it's the default one
+- Microsoft Logging: logs measurements using Microsoft logging framework  
+- InMemory: WIP
 
 ## Licence
 
