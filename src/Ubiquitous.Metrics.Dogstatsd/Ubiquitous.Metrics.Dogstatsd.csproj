@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
       <PackageReference Include="DogStatsD-CSharp-Client" Version="6.*" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     </ItemGroup>
 
     <ItemGroup>
