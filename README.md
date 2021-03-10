@@ -9,10 +9,11 @@ Abstractions for metrics with implementation for APM providers.
 | [`Ubiquitous.Metrics`](https://www.nuget.org/packages/Ubiquitous.Metrics/) | Core library |
 | [`Ubiquitous.Metrics.Prometheus`](https://www.nuget.org/packages/Ubiquitous.Metrics.Prometheus/) | Prometheus support |
 | [`Ubiquitous.Metrics.Dogstatsd`](https://www.nuget.org/packages/Ubiquitous.Metrics.Dogstatsd/) | Datadog StatsD support |
+| [`Ubiquitous.Metrics.MicrosoftLog`](https://www.nuget.org/packages/Ubiquitous.Metrics.MicrosoftLog/) | Log measurements |
 
 ## Why?
 
-Metrics in OpenTelemetry for .NET is still out sight, and we have a need to expose metrics to different vendors.
+Metrics in OpenTelemetry for .NET is still out of sight, and we have a need to expose metrics to different vendors.
 
 In order to avoid rewriting the whole measurement when switching from one vendor to another, we decided to create a
 small abstraction layer, which exposes similar metrics in a uniform fashion.
