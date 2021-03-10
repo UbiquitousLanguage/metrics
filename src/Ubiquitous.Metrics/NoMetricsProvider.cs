@@ -26,6 +26,21 @@ namespace Ubiquitous.Metrics {
 
             protected internal NoCount(MetricDefinition definition) : base(definition) { }
 
+            public void Inc()
+            {
+            //    Interlocked.Add(ref _count, 1);
+            }
+
+            public void Inc(string label)
+            {
+            //    Interlocked.Add(ref _count, 1);
+            }
+
+            public void Inc(int count, string label)
+            {
+            //    Interlocked.Add(ref _count, count);
+            }
+
             public void Inc(int count = 1, params string[]? labels) => Interlocked.Add(ref _count, count);
             public long Count => _count;
         }
