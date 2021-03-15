@@ -6,8 +6,8 @@ namespace Ubiquitous.Metrics.MicrosoftLog {
         protected MetricDefinition Definition { get; }
         protected ILogger Log { get; }
 
-        protected LoggingMetric(MetricDefinition metricDefinition, ILogger log) {
-            Definition = metricDefinition;
+        protected LoggingMetric(MetricDefinition definition, ILogger log) {
+            Definition = definition;
             Log        = log;
         }
 

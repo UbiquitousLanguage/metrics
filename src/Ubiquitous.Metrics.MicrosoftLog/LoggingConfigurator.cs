@@ -11,6 +11,8 @@ namespace Ubiquitous.Metrics.MicrosoftLog {
 
         public ICountMetric CreateCount(MetricDefinition definition) => new LogCount(definition, _log);
 
+        public ICountMetric<T> CreateCount<T>(MetricDefinition<T> definition) => new LogCount<T>(definition, _log);
+
         public IHistogramMetric CreateHistogram(MetricDefinition definition) => new LogHistogram(definition, _log);
 
         public IGaugeMetric CreateGauge(MetricDefinition definition) => new LogGauge(definition, _log);

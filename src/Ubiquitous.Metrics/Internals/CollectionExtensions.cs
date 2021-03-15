@@ -13,5 +13,8 @@ namespace Ubiquitous.Metrics.Internals {
 
         [DebuggerStepThrough]
         public static string[]? ArrayOrNull(this string? value) => value == null ? null : new[] {value};
+        
+        [DebuggerStepThrough]
+        public static string[]? ArrayOrEmpty(this string? value) => value == null ? Array.Empty<string>() : new[] {value};
     }
 }

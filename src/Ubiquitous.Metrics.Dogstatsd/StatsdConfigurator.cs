@@ -18,17 +18,21 @@ namespace Ubiquitous.Metrics.Dogstatsd {
         /// <param name="server">StatsD server address</param>
         public StatsdConfigurator(Label[] defaultLabels, string? prefix = null, string? server = null)
             => DogStatsd.Configure(
-                new StatsdConfig {
+                new StatsdConfig
+                {
                     ConstantTags     = StatsTags.FormTags(defaultLabels.GetLabelNames(), defaultLabels.GetLabels()),
                     StatsdServerName = server,
                     Prefix           = prefix
                 }
             );
 
-        public ICountMetric CreateCount(MetricDefinition metricDefinition) => new StatsdCount(metricDefinition);
+        public ICountMetric CreateCount(MetricDefinition definition) => new StatsdCount(definition);
 
-        public IHistogramMetric CreateHistogram(MetricDefinition metricDefinition) => new StatsdHistogram(metricDefinition);
+        public ICountMetric<T> CreateCount<T>(MetricDefinition<T> definition) => new StatsdCount<T>(definition);
 
-        public IGaugeMetric CreateGauge(MetricDefinition metricDefinition) => new StatsdGauge(metricDefinition);
+        public IHistogramMetric CreateHistogram(MetricDefinition metricDefinition)
+            => new StatsdHistogram(metricDefinition);
+
+        public IGaugeMetric CreateGauge(MetricDefinition definition) => new StatsdGauge(definition);
     }
 }

@@ -4,10 +4,12 @@ namespace Ubiquitous.Metrics.NoMetrics {
     /// to configure the real provider yet.
     /// </summary>
     public class NoMetricsProvider : IMetricsProvider {
-        public ICountMetric CreateCount(MetricDefinition definition) => new NoCount(definition);
+        public ICountMetric CreateCount(MetricDefinition definition) => new NoCount();
 
-        public IHistogramMetric CreateHistogram(MetricDefinition definition) => new NoHistogram(definition);
+        public ICountMetric<T> CreateCount<T>(MetricDefinition<T> definition) => new NoCount<T>();
 
-        public IGaugeMetric CreateGauge(MetricDefinition definition) => new NoGauge(definition);
+        public IHistogramMetric CreateHistogram(MetricDefinition definition) => new NoHistogram();
+
+        public IGaugeMetric CreateGauge(MetricDefinition definition) => new NoGauge();
     }
 }

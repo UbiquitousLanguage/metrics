@@ -16,13 +16,16 @@ namespace Ubiquitous.Metrics.Prometheus {
         /// Usually, things like the app name and the environment are used as default labels.</param>
         public PrometheusConfigurator(params Label[] defaultLabels) => _defaultLabels = defaultLabels;
 
-        public ICountMetric CreateCount(MetricDefinition metricDefinition)
-            => new PrometheusCount(metricDefinition, _defaultLabels);
+        public ICountMetric CreateCount(MetricDefinition definition)
+            => new PrometheusCount(definition, _defaultLabels);
 
-        public IHistogramMetric CreateHistogram(MetricDefinition metricDefinition) 
-            => new PrometheusHistogram(metricDefinition, _defaultLabels);
+        public ICountMetric<T> CreateCount<T>(MetricDefinition<T> definition)
+            => new PrometheusCount<T>(definition, _defaultLabels);
 
-        public IGaugeMetric CreateGauge(MetricDefinition metricDefinition)
-            => new PrometheusGauge(metricDefinition, _defaultLabels);
+        public IHistogramMetric CreateHistogram(MetricDefinition definition) 
+            => new PrometheusHistogram(definition, _defaultLabels);
+
+        public IGaugeMetric CreateGauge(MetricDefinition definition)
+            => new PrometheusGauge(definition, _defaultLabels);
     }
 }

@@ -6,9 +6,9 @@ namespace Ubiquitous.Metrics.Dogstatsd {
 
         protected string MetricName { get; }
 
-        protected StatsdMetric(MetricDefinition metricDefinition) {
-            _labelNames = metricDefinition.LabelNames;
-            MetricName  = metricDefinition.Name;
+        protected StatsdMetric(MetricDefinition definition) {
+            _labelNames = definition.LabelNames;
+            MetricName  = definition.Name;
         }
 
         protected string[]? FormTags(string[]? labels) => StatsTags.FormTags(_labelNames, labels);

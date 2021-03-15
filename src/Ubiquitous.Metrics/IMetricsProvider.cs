@@ -10,6 +10,8 @@ namespace Ubiquitous.Metrics {
         /// <returns></returns>
         ICountMetric CreateCount(MetricDefinition definition);
 
+        ICountMetric<T> CreateCount<T>(MetricDefinition<T> definition);
+
         /// <summary>
         /// Create a histogram metric
         /// </summary>

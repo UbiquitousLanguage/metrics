@@ -7,8 +7,8 @@ namespace Ubiquitous.Metrics.MicrosoftLog {
     class LogHistogram : LoggingMetric, IHistogramMetric {
         readonly InMemoryHistogram _histogram;
 
-        internal LogHistogram(MetricDefinition metricDefinition, ILogger log) : base(metricDefinition, log)
-            => _histogram = new InMemoryHistogram(metricDefinition);
+        internal LogHistogram(MetricDefinition definition, ILogger log) : base(definition, log)
+            => _histogram = new InMemoryHistogram();
 
         public double Sum => _histogram.Sum;
         public long Count => _histogram.Count;

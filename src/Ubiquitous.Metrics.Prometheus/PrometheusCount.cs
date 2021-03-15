@@ -5,14 +5,14 @@ namespace Ubiquitous.Metrics.Prometheus {
     class PrometheusCount : ICountMetric {
         readonly Counter _count;
 
-        internal PrometheusCount(MetricDefinition metricDefinition, Label[]? defaultLabels) {
+        internal PrometheusCount(MetricDefinition definition, Label[]? defaultLabels) {
             _count = global::Prometheus.Metrics.CreateCounter(
-                metricDefinition.Name,
-                metricDefinition.Description,
+                definition.Name,
+                definition.Description,
                 new CounterConfiguration
                 {
                     StaticLabels = defaultLabels.ToDictionary(),
-                    LabelNames   = metricDefinition.LabelNames
+                    LabelNames   = definition.LabelNames
                 }
             );
         }
@@ -30,5 +30,13 @@ namespace Ubiquitous.Metrics.Prometheus {
             else
                 _count.WithLabels(labels).Inc(count);
         }
+    }
+
+    class PrometheusCount<T> : PrometheusCount, ICountMetric<T> {
+        internal PrometheusCount(MetricDefinition<T> definition, Label[]? defaultLabels)
+            : base(definition, defaultLabels)
+            => GetLabels = definition.GetLabels;
+
+        public GetLabels<T> GetLabels { get; }
     }
 }

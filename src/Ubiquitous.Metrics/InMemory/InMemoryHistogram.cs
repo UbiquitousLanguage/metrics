@@ -4,9 +4,7 @@ using System.Threading;
 using static System.BitConverter;
 
 namespace Ubiquitous.Metrics.InMemory {
-    class InMemoryHistogram : InMemoryMetric, IHistogramMetric {
-        protected internal InMemoryHistogram(MetricDefinition definition) : base(definition) { }
-
+    class InMemoryHistogram : IHistogramMetric {
         public void Observe(Stopwatch stopwatch, string[]? labels = null, int count = 1)
             => Observe(stopwatch.ElapsedMilliseconds * 1000, count);
 

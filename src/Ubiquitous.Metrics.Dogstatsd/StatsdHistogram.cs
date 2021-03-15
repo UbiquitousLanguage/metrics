@@ -5,7 +5,7 @@ using Stopwatch = System.Diagnostics.Stopwatch;
 
 namespace Ubiquitous.Metrics.Dogstatsd {
     class StatsdHistogram : StatsdMetric, IHistogramMetric {
-        internal StatsdHistogram(MetricDefinition metricDefinition) : base(metricDefinition) { }
+        internal StatsdHistogram(MetricDefinition definition) : base(definition) { }
 
         public void Observe(Stopwatch stopwatch, string[]? labels = null, int count = 1)
             => Observe(stopwatch.Elapsed.TotalSeconds, count, labels);

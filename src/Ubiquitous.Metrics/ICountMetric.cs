@@ -13,13 +13,19 @@ namespace Ubiquitous.Metrics {
         /// <param name="count">Custom count, if you want to increase for more than one</param>
         /// <param name="label">Metric label</param>
         public void Inc(string? label = null, int count = 1)
-            => Inc(label.ArrayOrNull(), count);
-
+            => Inc(label.ArrayOrEmpty()!, count);
+            
         /// <summary>
         /// Increase the counter by a given number
         /// </summary>
         /// <param name="count">Increase count, one by default</param>
         /// <param name="labels">Metric labels, must be matching the number of configured label names</param>
-        void Inc(string[]? labels = null, int count = 1);
+        void Inc(string[] labels, int count = 1);
+    }
+
+    public interface ICountMetric<in T> : ICountMetric {
+        GetLabels<T> GetLabels { get; }
+
+        public void Inc(T element, int count = 1) => Inc(GetLabels(element), count);
     }
 }

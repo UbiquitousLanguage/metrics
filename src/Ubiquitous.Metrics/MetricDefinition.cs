@@ -1,4 +1,5 @@
 using System.Linq;
+using JetBrains.Annotations;
 using Ubiquitous.Metrics.Internals;
 using Ubiquitous.Metrics.Labels;
 
@@ -7,9 +8,9 @@ namespace Ubiquitous.Metrics {
     /// Basic definition of any metric
     /// </summary>
     public record MetricDefinition {
-        public string   Name          { get; }
-        public string   Description   { get; }
-        public string[] LabelNames    { get; }
+        public string Name { get; }
+        public string Description { get; }
+        public string[] LabelNames { get; }
 
         /// <summary>
         /// Metric definition constructor
@@ -21,8 +22,18 @@ namespace Ubiquitous.Metrics {
             Name = name;
             Ensure.NotEmpty(name, nameof(name));
 
-            LabelNames    = labelNames.ValueOrEmpty().GetStrings()!.ToArray();
-            Description   = description ?? "";
+            LabelNames  = labelNames.ValueOrEmpty().GetStrings()!.ToArray();
+            Description = description ?? "";
         }
     }
+
+    public record MetricDefinition<T> : MetricDefinition {
+        public GetLabels<T> GetLabels { get; }
+
+        public MetricDefinition(string name, string? description, GetLabels<T> getLabels, params LabelName[] labelNames)
+            : base(name, description, labelNames)
+            => GetLabels = getLabels;
+    }
+
+    public delegate string[] GetLabels<in T>(T element);
 }
