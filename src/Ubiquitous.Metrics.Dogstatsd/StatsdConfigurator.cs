@@ -25,6 +25,11 @@ namespace Ubiquitous.Metrics.Dogstatsd {
                 }
             );
 
+        /// <summary>
+        /// Should be used if DogStatsd is already configured.
+        /// </summary>
+        public StatsdConfigurator() { }
+
         public ICountMetric CreateCount(MetricDefinition metricDefinition) => new StatsdCount(metricDefinition);
 
         public IHistogramMetric CreateHistogram(MetricDefinition metricDefinition) => new StatsdHistogram(metricDefinition);
