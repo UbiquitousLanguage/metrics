@@ -1,3 +1,5 @@
+using System;
+using System.Reflection;
 using JetBrains.Annotations;
 using StatsdClient;
 using Ubiquitous.Metrics.Internals;
@@ -9,6 +11,8 @@ namespace Ubiquitous.Metrics.Dogstatsd {
     /// </summary>
     [PublicAPI]
     public class StatsdConfigurator : IMetricsProvider {
+        IDogStatsd _service;
+        
         /// <summary>
         /// Instantiate the Datadog StatsD metrics configurator
         /// </summary>
@@ -16,19 +20,46 @@ namespace Ubiquitous.Metrics.Dogstatsd {
         /// Usually, things like the app name and the environment are used as default labels.</param>
         /// <param name="prefix">Prefix, which will be added for all the metrics</param>
         /// <param name="server">StatsD server address</param>
-        public StatsdConfigurator(Label[] defaultLabels, string? prefix = null, string? server = null)
-            => DogStatsd.Configure(
+        public StatsdConfigurator(Label[] defaultLabels, string? prefix = null, string? server = null) {
+            _service = GetService();
+            _service.Configure(
                 new StatsdConfig {
                     ConstantTags     = StatsTags.FormTags(defaultLabels.GetLabelNames(), defaultLabels.GetLabels()),
                     StatsdServerName = server,
                     Prefix           = prefix
                 }
             );
+        }
 
-        public ICountMetric CreateCount(MetricDefinition metricDefinition) => new StatsdCount(metricDefinition);
+        /// <summary>
+        /// Instantiate the Datadog StatsD metrics configurator with a given instance of <see cref="IDogStatsd"/>.
+        /// </summary>
+        /// <param name="dogStatsd">Pre-configured Dogstatsd service instance.</param>
+        public StatsdConfigurator(IDogStatsd dogStatsd) => _service = dogStatsd;
 
-        public IHistogramMetric CreateHistogram(MetricDefinition metricDefinition) => new StatsdHistogram(metricDefinition);
+        /// <summary>
+        /// Instantiate the Datadog StatsD metrics configurator.
+        /// Should only be used if DogStatsd is already configured.
+        /// </summary>
+        public StatsdConfigurator() {
+            _service = GetService();
+            var field  = typeof(DogStatsdService).GetField("_config", BindingFlags.Instance | BindingFlags.NonPublic);
+            var config = (StatsdConfig) field.GetValue(_service);
 
-        public IGaugeMetric CreateGauge(MetricDefinition metricDefinition) => new StatsdGauge(metricDefinition);
+            if (config == null)
+                throw new InvalidOperationException("Dogstatsd hasn't been configured");
+        }
+
+        DogStatsdService GetService() {
+            var field = typeof(DogStatsd).GetField("_dogStatsdService", BindingFlags.NonPublic | BindingFlags.Static);
+            return (DogStatsdService) field.GetValue(null);
+        }
+
+        public ICountMetric CreateCount(MetricDefinition metricDefinition) => new StatsdCount(_service, metricDefinition);
+
+        public IHistogramMetric CreateHistogram(MetricDefinition metricDefinition)
+            => new StatsdHistogram(_service, metricDefinition);
+
+        public IGaugeMetric CreateGauge(MetricDefinition metricDefinition) => new StatsdGauge(_service, metricDefinition);
     }
 }

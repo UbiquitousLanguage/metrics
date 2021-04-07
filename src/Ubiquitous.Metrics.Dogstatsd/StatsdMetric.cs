@@ -1,14 +1,17 @@
 using System.Linq;
+using StatsdClient;
 
 namespace Ubiquitous.Metrics.Dogstatsd {
     abstract class StatsdMetric {
         readonly string[] _labelNames;
 
-        protected string MetricName { get; }
+        protected string     MetricName { get; }
+        protected IDogStatsd Service    { get; }
 
-        protected StatsdMetric(MetricDefinition metricDefinition) {
+        protected StatsdMetric(IDogStatsd service, MetricDefinition metricDefinition) {
             _labelNames = metricDefinition.LabelNames;
             MetricName  = metricDefinition.Name;
+            Service     = service;
         }
 
         protected string[]? FormTags(string[]? labels) => StatsTags.FormTags(_labelNames, labels);

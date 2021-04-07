@@ -2,9 +2,9 @@ using StatsdClient;
 
 namespace Ubiquitous.Metrics.Dogstatsd {
     class StatsdCount : StatsdMetric, ICountMetric {
-        internal StatsdCount(MetricDefinition metricDefinition) : base(metricDefinition) { }
+        internal StatsdCount(IDogStatsd service, MetricDefinition metricDefinition) : base(service, metricDefinition) { }
 
         public void Inc(string[]? labels = null, int count = 1)
-            => DogStatsd.Increment(MetricName, count, tags: FormTags(labels));
+            => Service.Increment(MetricName, count, tags: FormTags(labels));
     }
 }

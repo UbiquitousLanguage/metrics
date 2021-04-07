@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Metrics.Dogstats
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Metrics.MicrosoftLog", "src\Ubiquitous.Metrics.MicrosoftLog\Ubiquitous.Metrics.MicrosoftLog.csproj", "{127825BC-ACCB-488C-9821-AF539474E627}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FCC6B170-077B-456D-9D82-5C9FE0F43B05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Metrics.DogstatsdTests", "test\Ubiquitous.Metrics.DogstatsdTests\Ubiquitous.Metrics.DogstatsdTests.csproj", "{0B906251-A1F8-483C-B38B-CEF42542F4D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,10 +42,15 @@ Global
 		{127825BC-ACCB-488C-9821-AF539474E627}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{127825BC-ACCB-488C-9821-AF539474E627}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{127825BC-ACCB-488C-9821-AF539474E627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B906251-A1F8-483C-B38B-CEF42542F4D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B906251-A1F8-483C-B38B-CEF42542F4D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B906251-A1F8-483C-B38B-CEF42542F4D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B906251-A1F8-483C-B38B-CEF42542F4D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ADEF7CBE-D1CB-45BB-A105-B7E27A7A9B76} = {9D8B5837-914A-4683-A7AA-18E05EEAA8CD}
 		{DB2E241F-E447-406B-AE16-1D908FE0CDEC} = {9D8B5837-914A-4683-A7AA-18E05EEAA8CD}
 		{127825BC-ACCB-488C-9821-AF539474E627} = {9D8B5837-914A-4683-A7AA-18E05EEAA8CD}
+		{0B906251-A1F8-483C-B38B-CEF42542F4D5} = {FCC6B170-077B-456D-9D82-5C9FE0F43B05}
 	EndGlobalSection
 EndGlobal
