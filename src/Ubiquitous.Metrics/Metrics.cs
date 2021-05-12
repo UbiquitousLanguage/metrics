@@ -93,7 +93,7 @@ namespace Ubiquitous.Metrics {
             var stopwatch = Stopwatch.StartNew();
 
             try {
-                await action();
+                await action().ConfigureAwait(false);
             }
             catch (Exception) {
                 errorCount?.Inc(labels);
@@ -161,7 +161,7 @@ namespace Ubiquitous.Metrics {
 
             try {
                 var task = action();
-                result = task.IsCompleted ? task.Result : await action();
+                result = task.IsCompleted ? task.Result : await action().ConfigureAwait(false);
             }
             catch (Exception) {
                 errorCount?.Inc(labels);
@@ -199,10 +199,10 @@ namespace Ubiquitous.Metrics {
 
             try {
                 var task = action();
-                result = task.IsCompleted ? task.Result : await action();
+                result = task.IsCompleted ? task.Result : await action().ConfigureAwait(false);
             }
             catch (Exception) {
-                errorCount?.Inc(labels: labels);
+                errorCount?.Inc(labels);
 
                 throw;
             }
@@ -238,7 +238,7 @@ namespace Ubiquitous.Metrics {
 
             try {
                 var task = action();
-                result = task.IsCompleted ? task.Result : await action();
+                result = task.IsCompleted ? task.Result : await action().ConfigureAwait(false);
             }
             catch (Exception) {
                 errorCount?.Inc(labels);
