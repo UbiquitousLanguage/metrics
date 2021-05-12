@@ -1,7 +1,7 @@
 using System.Threading;
 
 namespace Ubiquitous.Metrics.InMemory {
-    class InMemoryGauge : InMemoryMetric, IGaugeMetric {
+    public class InMemoryGauge : InMemoryMetric, IGaugeMetric {
         double _value;
 
         protected internal InMemoryGauge(MetricDefinition definition) : base(definition) { }

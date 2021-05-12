@@ -1,7 +1,7 @@
 using System.Threading;
 
 namespace Ubiquitous.Metrics.InMemory {
-    class InMemoryCount : InMemoryMetric, ICountMetric {
+    public class InMemoryCount : InMemoryMetric, ICountMetric {
         long _count;
 
         protected internal InMemoryCount(MetricDefinition definition) : base(definition) { }
