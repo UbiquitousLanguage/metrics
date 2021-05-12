@@ -18,6 +18,6 @@ namespace Ubiquitous.Metrics {
         /// </summary>
         /// <param name="value">The new gauge value</param>
         /// <param name="labels">Metric labels, must be matching the number of configured label names</param>
-        void Set(double value, string[]? labels = null);
+        void Set(double value, string[]? labels);
     }
 }

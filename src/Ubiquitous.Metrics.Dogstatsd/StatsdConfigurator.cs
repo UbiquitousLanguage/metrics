@@ -44,15 +44,17 @@ namespace Ubiquitous.Metrics.Dogstatsd {
         public StatsdConfigurator() {
             _service = GetService();
             var field  = typeof(DogStatsdService).GetField("_config", BindingFlags.Instance | BindingFlags.NonPublic);
-            var config = (StatsdConfig) field.GetValue(_service);
+            var config = (StatsdConfig?) field!.GetValue(_service);
 
             if (config == null)
                 throw new InvalidOperationException("Dogstatsd hasn't been configured");
         }
 
-        DogStatsdService GetService() {
+        static DogStatsdService GetService() {
             var field = typeof(DogStatsd).GetField("_dogStatsdService", BindingFlags.NonPublic | BindingFlags.Static);
-            return (DogStatsdService) field.GetValue(null);
+            var service = (DogStatsdService?) field!.GetValue(null);
+
+            return service ?? throw new InvalidOperationException("Dogstatsd service is not available");
         }
 
         public ICountMetric CreateCount(MetricDefinition metricDefinition) => new StatsdCount(_service, metricDefinition);

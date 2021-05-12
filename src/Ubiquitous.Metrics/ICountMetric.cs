@@ -20,6 +20,6 @@ namespace Ubiquitous.Metrics {
         /// </summary>
         /// <param name="count">Increase count, one by default</param>
         /// <param name="labels">Metric labels, must be matching the number of configured label names</param>
-        void Inc(string[]? labels = null, int count = 1);
+        void Inc(string[]? labels, int count = 1);
     }
 }
