@@ -161,7 +161,7 @@ namespace Ubiquitous.Metrics {
 
             try {
                 var task = action();
-                result = task.IsCompleted ? task.Result : await action();
+                result = task.IsCompleted ? task.Result : await task;
             }
             catch (Exception) {
                 errorCount?.Inc(labels);
@@ -199,7 +199,7 @@ namespace Ubiquitous.Metrics {
 
             try {
                 var task = action();
-                result = task.IsCompleted ? task.Result : await action();
+                result = task.IsCompleted ? task.Result : await task;
             }
             catch (Exception) {
                 errorCount?.Inc(labels: labels);
@@ -238,7 +238,7 @@ namespace Ubiquitous.Metrics {
 
             try {
                 var task = action();
-                result = task.IsCompleted ? task.Result : await action();
+                result = task.IsCompleted ? task.Result : await task;
             }
             catch (Exception) {
                 errorCount?.Inc(labels);
