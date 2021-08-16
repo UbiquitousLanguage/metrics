@@ -17,7 +17,10 @@ namespace Ubiquitous.Metrics {
         Func<MetricDefinition, IGaugeMetric>?     _createGauge;
         Func<MetricDefinition, IHistogramMetric>? _createHistogram;
 
-        static Metrics() => Instance = new Metrics();
+        static Metrics() {
+            Instance = new Metrics();
+            Instance = CreateUsing(new NoMetricsProvider());
+        }
 
         /// <summary>
         /// Get the Metrics instance. Normally, you'd need only one Metrics instance per application.
