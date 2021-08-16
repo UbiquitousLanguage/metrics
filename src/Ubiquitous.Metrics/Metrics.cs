@@ -17,7 +17,10 @@ namespace Ubiquitous.Metrics {
         Func<MetricDefinition, IGaugeMetric>?     _createGauge;
         Func<MetricDefinition, IHistogramMetric>? _createHistogram;
 
-        static Metrics() => Instance = new Metrics();
+        static Metrics() {
+            Instance = new Metrics();
+            Instance = CreateUsing(new NoMetricsProvider());
+        }
 
         /// <summary>
         /// Get the Metrics instance. Normally, you'd need only one Metrics instance per application.
@@ -56,7 +59,7 @@ namespace Ubiquitous.Metrics {
         /// <param name="definition">Metric definition (name, description and labels)</param>
         /// <returns></returns>
         public ICountMetric CreateCount(MetricDefinition definition)
-            => Ensure.NotDefault(_createCount, "Metrics provider hasn't been configured")(definition);
+            => _createCount(definition);
 
         /// <summary>
         /// Create a histogram metric
@@ -64,7 +67,7 @@ namespace Ubiquitous.Metrics {
         /// <param name="definition">Metric definition (name, description and labels)</param>
         /// <returns></returns>
         public IHistogramMetric CreateHistogram(MetricDefinition definition)
-            => Ensure.NotDefault(_createHistogram, "Metrics provider hasn't been configured")(definition);
+            => _createHistogram(definition);
 
         /// <summary>
         /// Create a gauge metric
@@ -72,7 +75,7 @@ namespace Ubiquitous.Metrics {
         /// <param name="definition">Metric definition (name, description and labels)</param>
         /// <returns></returns>
         public IGaugeMetric CreateGauge(MetricDefinition definition)
-            => Ensure.NotDefault(_createGauge, "Metrics provider hasn't been configured")(definition);
+            => _createGauge(definition);
 
         [Obsolete("Use MeasureTask")]
         public static Task Measure(
