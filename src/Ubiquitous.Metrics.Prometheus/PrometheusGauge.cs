@@ -1,21 +1,17 @@
 using Prometheus;
-using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Prometheus {
     class PrometheusGauge : IGaugeMetric {
         readonly Gauge _gauge;
 
-        internal PrometheusGauge(MetricDefinition metricDefinition, Label[]? defaultLabels) {
-            _gauge = global::Prometheus.Metrics.CreateGauge(
+        internal PrometheusGauge(MetricDefinition metricDefinition)
+            => _gauge = global::Prometheus.Metrics.CreateGauge(
                 metricDefinition.Name,
                 metricDefinition.Description,
-                new GaugeConfiguration
-                {
-                    StaticLabels = defaultLabels.ToDictionary(),
-                    LabelNames   = metricDefinition.LabelNames
+                new GaugeConfiguration {
+                    LabelNames = metricDefinition.LabelNames
                 }
             );
-        }
 
         public void Set(double value, string? label = null) {
             if (label != null)

@@ -1,6 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
-      <PackageReference Include="DogStatsD-CSharp-Client" Version="6.*" />
+      <PackageReference Include="DogStatsD-CSharp-Client" Version="8.0.0" />
+      <PackageReference Update="JetBrains.Annotations" Version="2023.3.0" />
+      <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+      <PackageReference Update="MinVer" Version="4.3.0" />
     </ItemGroup>
 
     <ItemGroup>
