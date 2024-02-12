@@ -1,40 +1,37 @@
 <Project>
-  <PropertyGroup>
-    <TargetFrameworks>net5.0;netstandard2.1;netcoreapp3.1</TargetFrameworks>
-    <LangVersion>9</LangVersion>
-    <NoWarn>$(NoWarn);CS1591;CS0618;</NoWarn>
-    <IsPackable>true</IsPackable>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net8.0;net6.0;net7.0;netstandard2.1</TargetFrameworks>
+        <LangVersion>11</LangVersion>
+        <NoWarn>$(NoWarn);CS1591;CS0618;</NoWarn>
+        <IsPackable>true</IsPackable>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <PackageId>$(AssemblyName)</PackageId>
-    <PackageVersion>$(PackageVersion)</PackageVersion>
-    <AssemblyVersion>$(AssemblyVersion)</AssemblyVersion>
-    <FileVersion>$(FileVersion)</FileVersion>
-    <Company>Ubiquitous AS</Company>
-    <Copyright>Copyright © $([System.DateTime]::Now.Year) Ubiquitous AS</Copyright>
-    <PackageProjectUrl>https://github.com/ubiquitousas/metrics</PackageProjectUrl>
-    <PackageIcon>logo.png</PackageIcon>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>metrics;prometheus;statsd</PackageTags>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <RepositoryUrl>https://github.com/ubiquitousas/metrics</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <IncludeSymbols>true</IncludeSymbols>
-  </PropertyGroup>
+    <PropertyGroup>
+        <PackageId>$(AssemblyName)</PackageId>
+        <PackageVersion>$(PackageVersion)</PackageVersion>
+        <AssemblyVersion>$(AssemblyVersion)</AssemblyVersion>
+        <FileVersion>$(FileVersion)</FileVersion>
+        <Company>Ubiquitous AS</Company>
+        <Copyright>Copyright © $([System.DateTime]::Now.Year) Ubiquitous AS</Copyright>
+        <PackageProjectUrl>https://github.com/ubiquitousas/metrics</PackageProjectUrl>
+        <PackageIcon>logo.png</PackageIcon>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageTags>metrics;prometheus;statsd</PackageTags>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <RepositoryUrl>https://github.com/ubiquitousas/metrics</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <IncludeSymbols>true</IncludeSymbols>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="../../logo.png" Pack="true" Visible="false" PackagePath=""/>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="MinVer" Version="2.5.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="../../logo.png" Pack="true" Visible="false" PackagePath=""/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MinVer" Version="2.5.0" PrivateAssets="All"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" PrivateAssets="All"/>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    </ItemGroup>
 
 </Project>

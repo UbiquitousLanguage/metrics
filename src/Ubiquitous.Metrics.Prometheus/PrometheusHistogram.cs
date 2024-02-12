@@ -2,29 +2,26 @@ using System;
 using System.Diagnostics;
 using Prometheus;
 using Ubiquitous.Metrics.Internals;
-using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Prometheus {
     class PrometheusHistogram : IHistogramMetric {
         readonly Histogram _histogram;
 
-        static readonly double[] DefaultBounds =
-            {.002, .005, .01, .025, .05, .075, .1, .25, .5, .75, 1, 2.5, 5, 7.5, 10, 30, 60, 120, 180, 240, 300};
+        static readonly double[] DefaultBounds;
 
-        public PrometheusHistogram(
-            MetricDefinition metricDefinition, Label[]? defaultLabels, double[]? bounds = null
-        ) {
-            _histogram = global::Prometheus.Metrics.CreateHistogram(
+        public PrometheusHistogram(MetricDefinition metricDefinition, double[]? bounds = null)
+            => _histogram = global::Prometheus.Metrics.CreateHistogram(
                 metricDefinition.Name,
                 metricDefinition.Description,
-                new HistogramConfiguration
-                {
-                    Buckets      = bounds ?? DefaultBounds,
-                    StaticLabels = defaultLabels.ToDictionary(),
-                    LabelNames   = metricDefinition.LabelNames
+                new HistogramConfiguration {
+                    Buckets    = bounds ?? DefaultBounds,
+                    LabelNames = metricDefinition.LabelNames
                 }
             );
-        }
+
+        static PrometheusHistogram() => DefaultBounds = new[] {
+            .002, .005, .01, .025, .05, .075, .1, .25, .5, .75, 1, 2.5, 5, 7.5, 10, 30, 60, 120, 180, 240, 300
+        };
 
         public void Observe(Stopwatch stopwatch, string? label = null, int count = 1)
             => Observe(stopwatch, label.ArrayOrNull(), count);

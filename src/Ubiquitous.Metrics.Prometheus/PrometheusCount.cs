@@ -1,21 +1,17 @@
 using Prometheus;
-using Ubiquitous.Metrics.Labels;
 
 namespace Ubiquitous.Metrics.Prometheus {
     class PrometheusCount : ICountMetric {
         readonly Counter _count;
 
-        internal PrometheusCount(MetricDefinition metricDefinition, Label[]? defaultLabels) {
-            _count = global::Prometheus.Metrics.CreateCounter(
+        internal PrometheusCount(MetricDefinition metricDefinition)
+            => _count = global::Prometheus.Metrics.CreateCounter(
                 metricDefinition.Name,
                 metricDefinition.Description,
-                new CounterConfiguration
-                {
-                    StaticLabels = defaultLabels.ToDictionary(),
-                    LabelNames   = metricDefinition.LabelNames
+                new CounterConfiguration {
+                    LabelNames = metricDefinition.LabelNames
                 }
             );
-        }
 
         public void Inc(string? label = null, int count = 1) {
             if (label == null)
