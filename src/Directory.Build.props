@@ -1,10 +1,11 @@
 <Project>
     <PropertyGroup>
         <TargetFrameworks>net8.0;net6.0;net7.0;netstandard2.1</TargetFrameworks>
-        <LangVersion>11</LangVersion>
+        <LangVersion>12</LangVersion>
         <NoWarn>$(NoWarn);CS1591;CS0618;</NoWarn>
         <IsPackable>true</IsPackable>
         <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -29,9 +30,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MinVer" Version="2.5.0" PrivateAssets="All"/>
-        <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" PrivateAssets="All"/>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+        <PackageReference Include="MinVer" Version="4.3.0" PrivateAssets="All"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" PrivateAssets="All"/>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Using Include="JetBrains.Annotations"/>
+    </ItemGroup>
 </Project>

@@ -1,17 +1,12 @@
-using Ubiquitous.Metrics.Internals;
+namespace Ubiquitous.Metrics.Labels;
 
-namespace Ubiquitous.Metrics.Labels {
-    public record LabelName {
-        public string Name { get; }
+public record LabelName {
+    public string Name { get; }
         
-        public LabelName(string name) {
-            Ensure.NotEmpty(name, nameof(name));
-            
-            Name = name;
-        }
+    [PublicAPI]
+    public LabelName(string name) => Name = Ensure.NotEmpty(name, nameof(name));
 
-        public static implicit operator LabelName(string name) => new(name);
+    public static implicit operator LabelName(string name) => new(name);
 
-        public static implicit operator string(LabelName labelName) => labelName.Name;
-    }
+    public static implicit operator string(LabelName labelName) => labelName.Name;
 }

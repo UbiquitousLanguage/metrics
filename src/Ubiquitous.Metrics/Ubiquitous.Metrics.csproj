@@ -1,7 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <PackageReference Update="JetBrains.Annotations" Version="2023.3.0" />
-    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
-    <PackageReference Update="MinVer" Version="4.3.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <InternalsVisibleTo Include="Ubiquitous.Metrics.Prometheus"/>
+        <InternalsVisibleTo Include="Ubiquitous.Metrics.Dogstatsd"/>
+        <InternalsVisibleTo Include="Ubiquitous.Metrics.MicrosoftLog"/>
+        <Using Include="Ubiquitous.Metrics.Internals"/>
+        <Using Include="System.Diagnostics"/>
+    </ItemGroup>
 </Project>

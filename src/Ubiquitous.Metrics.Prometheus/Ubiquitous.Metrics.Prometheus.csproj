@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <PackageReference Include="prometheus-net" Version="8.2.1" />
-    <PackageReference Update="JetBrains.Annotations" Version="2023.3.0" />
-    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
-    <PackageReference Update="MinVer" Version="4.3.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Ubiquitous.Metrics\Ubiquitous.Metrics.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="prometheus-net" Version="8.2.1"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Ubiquitous.Metrics\Ubiquitous.Metrics.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Prometheus"/>
+    </ItemGroup>
 </Project>

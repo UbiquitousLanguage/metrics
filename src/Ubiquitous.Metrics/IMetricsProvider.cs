@@ -1,27 +1,27 @@
-namespace Ubiquitous.Metrics {
+namespace Ubiquitous.Metrics;
+
+/// <summary>
+/// Metrics provider interface
+/// </summary>
+public interface IMetricsProvider {
     /// <summary>
-    /// Metrics provider interface
+    /// Create a counter metric
     /// </summary>
-    public interface IMetricsProvider {
-        /// <summary>
-        /// Create a counter metric
-        /// </summary>
-        /// <param name="definition">Metric definition (name, description and labels)</param>
-        /// <returns></returns>
-        ICountMetric CreateCount(MetricDefinition definition);
+    /// <param name="definition">Metric definition (name, description and labels)</param>
+    /// <returns></returns>
+    ICountMetric CreateCount(MetricDefinition definition);
 
-        /// <summary>
-        /// Create a histogram metric
-        /// </summary>
-        /// <param name="definition">Metric definition (name, description and labels)</param>
-        /// <returns></returns>
-        IHistogramMetric CreateHistogram(MetricDefinition definition);
+    /// <summary>
+    /// Create a histogram metric
+    /// </summary>
+    /// <param name="definition">Metric definition (name, description and labels)</param>
+    /// <returns></returns>
+    IHistogramMetric CreateHistogram(MetricDefinition definition);
 
-        /// <summary>
-        /// Create a gauge metric
-        /// </summary>
-        /// <param name="definition">Metric definition (name, description and labels)</param>
-        /// <returns></returns>
-        IGaugeMetric CreateGauge(MetricDefinition definition);
-    }
+    /// <summary>
+    /// Create a gauge metric
+    /// </summary>
+    /// <param name="definition">Metric definition (name, description and labels)</param>
+    /// <returns></returns>
+    IGaugeMetric CreateGauge(MetricDefinition definition);
 }

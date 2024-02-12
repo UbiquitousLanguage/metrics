@@ -1,21 +1,15 @@
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 
-namespace Ubiquitous.Metrics.Diagnostics {
-    class DiagnosticsService : IHostedService {
-        readonly IEnumerable<DiagnosticSubscriberBase> _diagnosticObservers;
+namespace Ubiquitous.Metrics.Diagnostics;
 
-        public DiagnosticsService(IEnumerable<DiagnosticSubscriberBase> diagnosticObservers) => _diagnosticObservers = diagnosticObservers;
+class DiagnosticsService(IEnumerable<DiagnosticSubscriberBase> diagnosticObservers) : IHostedService {
+    public Task StartAsync(CancellationToken cancellationToken) {
+        foreach (var diagnosticObserver in diagnosticObservers)
+            diagnosticObserver.Subscribe(DiagnosticListener.AllListeners);
 
-        public Task StartAsync(CancellationToken cancellationToken) {
-            foreach (var diagnosticObserver in _diagnosticObservers) diagnosticObserver.Subscribe(DiagnosticListener.AllListeners);
-
-            return Task.CompletedTask;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+        return Task.CompletedTask;
     }
+
+    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }

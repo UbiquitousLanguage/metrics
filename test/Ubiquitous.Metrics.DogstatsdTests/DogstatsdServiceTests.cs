@@ -1,14 +1,13 @@
-﻿using System;
-using FluentAssertions;
+﻿using System.Diagnostics.CodeAnalysis;
 using Ubiquitous.Metrics.Dogstatsd;
-using Xunit;
 
-namespace Ubiquitous.Metrics.DogstatsdTests {
-    public class DogstatsdServiceTests {
-        [Fact]
-        public void PreventUsingNotConfiguredDefaultInstance() {
-            Action init = () => new StatsdConfigurator();
-            init.Should().Throw<InvalidOperationException>();
-        }
+namespace Ubiquitous.Metrics.DogstatsdTests;
+
+public class DogstatsdServiceTests {
+    [Fact]
+    [SuppressMessage("Performance", "CA1806:Do not ignore method results")]
+    public void PreventUsingNotConfiguredDefaultInstance() {
+        Action init = () => new StatsdConfigurator();
+        init.Should().Throw<InvalidOperationException>();
     }
 }
